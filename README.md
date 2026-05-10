@@ -7,7 +7,7 @@ This note collection is currently being **built in public**. Chapters will be up
 
 - [x] **Chapter 1: The Principle of Least Action** Mathematical preparations (Taylor expansions, Functionals), defining the Action, and deriving the Euler-Lagrange Equations step-by-step.
 - [ ] **Chapter 2: Yet to be named**
-  Defining $L = T - V$, recovering Newtonian mechanics, understanding generalized coordinates, and applying the math to real-world systems (Pendulums, Atwood machines).
+  Defining $L = T - V$, recovering Newtonian mechanics, understanding generalized coordinates, and applying the math to real-world systems (Pendulums etc.).
 - [ ] **Chapter 3 and onwards: Yet to be named**
   Content still not entirely planned out
 
