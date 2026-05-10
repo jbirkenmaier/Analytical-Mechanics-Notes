@@ -1,0 +1,441 @@
+\documentclass{article}
+\usepackage{graphicx} 
+\usepackage{amsmath}
+\usepackage{physics}
+\title{Analytical Mechanics}
+\author{Johannes Birkenmaier}
+\date{May 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Principle of least action}
+\subsection{Introduction}
+\subsection{Mathematical Preparations}
+Before we proceed, we need some mathematical preparation first.
+I want to give a short refresher about one-dimensional Taylor expansion and then multivariate Taylor expansion, and then introduce functionals and some notations that we will need to understand what comes next.
+
+\subsubsection{Taylor expansion}
+So let's first start with a refresher of the Taylor expansion in one dimension.
+As you might recall, a Taylor expansion is a way to represent a function as a polynomial. We use this because dealing with polynomials is oftentimes easier than working with the original function. The formula for the one-dimensional Taylor expansion is given by: 
+\begin{align}
+    f(x; x_0) = \sum_{n=0}^\infty \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n
+\end{align}
+Where I used the following conventions:
+\begin{align}
+    f^{(n)}(x_0) = \left[\frac{\text{d}^n}{\text{d}x^n} f(x)\right]\bigg{|}_{x_0}
+\end{align}
+$x_0$ is the point that we are developing our Taylor expansion around. 
+Let's just do a short example to see how this works and how we can use it to simplify an expression for us. 
+
+\paragraph{Example}
+One of the best examples for the use of Taylor expansions is the sine function. 
+Say we observe an oscillation that is in the form of a sine and our goal is to create a somewhat easier representation of the sine expression. We can use a Taylor expansion of the sine function to transform the sine into a polynomial. 
+So our function is $f(x)=\sin(x)$. As the point of development we choose $x_0 = 0$.
+With all this preparation we can start by plugging into our formula:
+\begin{align*}
+    f(x; x_0) &= \sum_{n=0}^\infty \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n \\
+    &= \frac{1}{0!}\left[\frac{\text{d}^0}{\text{d}x^0} \sin(x)\right]\bigg{|}_{0}\left(x-0\right)^0 + \frac{1}{1!}\left[\frac{\text{d}^1}{\text{d}x^1} \sin(x)\right]\bigg{|}_{0}\left(x-0\right)^1 \\
+    &\quad + \frac{1}{2!}\left[\frac{\text{d}^2}{\text{d}x^2} \sin(x) \right]\bigg{|}_{0}\left(x-0\right)^2 + \dots\\
+    &=\sin(0) + \cos(0)\, x -\frac{1}{2}\sin(0)\, x^2 - \frac{1}{6} \cos(0)\, x^3 + \dots \\
+    &=x-\frac{1}{6}x^3+\dots
+\end{align*}
+Okay, so far this looks a lot easier to use than the abstract sine object. But you might say, okay, how does this help us? We have to calculate an infinite amount of terms! Well, mathematically you are correct. But as physicists, we can apply a little trick. We only consider the number of terms necessary to describe our problem at hand accurately for our needs. Note that in principle we could calculate the result infinitely precise, just by considering more terms in our Taylor expansion. But oftentimes it is sufficient for physicists to consider only the first few terms of this expansion. Let's apply this to our example. Say we are looking at something that oscillates only a tiny amount around $x_0$. So our $\left(x-x_0\right)$ term becomes very small. As we chose our $x_0=0$, we can just say that $x$ is small in our formula, $x \ll 1$. Therefore, terms of higher order become very small, as they contain higher orders of a very small number. So we might decide that only terms of order three contribute meaningfully to our solution and ignore everything beyond. 
+Our new expression for our sine function now becomes:
+\begin{align}
+    \sin(x) \approx x- \frac{1}{6} x^3
+\end{align}
+So we went from a function that we could not really work with to a much simpler representation. This is the power of Taylor expansion and the whole point why we use it. 
+Now let's go to more than one dimension.
+
+\subsubsection{Multivariate Taylor Expansion}
+If we want to find a simpler representation for a multivariate function, we must consider the multivariate Taylor Expansion. 
+The multivariate Taylor expansion for a function $f(\vec{x})=f(x_1,x_2, \dots, x_n)$ is defined as:
+\begin{align}
+    T(\vec{x};\vec{a}) = \sum^\infty_{|\vec{\alpha}|=0}\frac{D^{\Vec{\alpha}}f(\vec{x}_0)}{\vec{\alpha}!}\left(\vec{x}-\vec{x_0}\right)^{\vec{\alpha}}
+\end{align}
+Now this looks very confusing and intimidating if you see it for the first time, but we will dissect it and make sure we understand every part of it, and then do a small example together. Probably the most confusing thing about this definition is the notation. 
+
+\subsubsection*{The Multi-index $\vec{\alpha}$}
+
+The heart of this notation is the vector $\vec{\alpha}$, which is called a Multi-index. 
+It acts really just as an index for our sum and is a vector of non-negative whole numbers:
+\begin{align}
+    \vec{\alpha} = (\alpha_1, \alpha_2, \dots,\alpha_n)
+\end{align}
+for example:
+\begin{align}
+    \vec{\alpha} = (2,0,1)
+\end{align}
+These numbers tell us how often something is supposed to happen with our function. This will become more clear when we look at the example later on. 
+
+\subsubsection*{The dimension of $\vec{\alpha}$}
+The dimension $n$ of $\vec{\alpha}$ is the dimension of the variable $\vec{x}$ of the function we are developing.
+\begin{align}
+    \dim(\vec{\alpha}) = \dim(\vec{x})
+\end{align}
+So if $\vec{x}$ has three components, our vector $\vec{\alpha}$ also has three components!
+Now we need to discuss a very important property of $\vec{\alpha}$ to understand our notation. 
+
+\subsubsection*{The absolute value of $\vec{\alpha}$}
+The definition of the absolute value of $\vec{\alpha}$ is not the standard definition for the length of a vector. Instead, it is defined as:
+\begin{align}
+    |\vec{\alpha}| = \sum_{i=1}^n \alpha_i = \alpha_1+\alpha_2+\dots+\alpha_n
+\end{align}
+For example:
+\begin{align}
+    |\vec{\alpha}|=|(2,0,1)| = 2+0+1 = 3
+\end{align}
+
+\subsubsection*{The Factorial of $\vec{\alpha}$}
+The factorial of our Multi-index $\vec{\alpha}$ is defined as:
+\begin{align}
+    \vec{\alpha}! = \alpha_1!\cdot\alpha_2!\,\cdot\dots\cdot\,\alpha_n! = \prod_{i=1}^n \alpha_i!
+\end{align}
+
+\subsubsection*{The Derivative $D^{\vec{\alpha}}$}
+This derivative term might seem like the most difficult of our definitions, but is actually very easy to understand. It is defined as:
+\begin{align}
+    D^{\vec{\alpha}}=\frac{\partial^{|\vec{\alpha}|}}{\partial x_1^{\alpha_1}\cdot \partial x_2^{\alpha_2}\cdot\partial x_3^{\alpha_3}\cdot\dots\cdot\partial x_n^{\alpha_n}}
+\end{align}
+For our example, this would be:
+\begin{align}
+    D^{(2,0,1)}=\frac{\partial^3}{\partial x_1^2 \cdot \partial x_2^0 \cdot \partial x_3^1}
+\end{align}
+Okay, now that we have got all these definitions, we want to think a little bit about what is happening in our Multivariate Taylor Expansion.
+Essentially, if we look back at our formula, this is what it tells us:
+We go through all possible combinations of our Multi-index $\alpha$ that have a certain absolute value, associated with the current summation term. 
+Note that $D^{\vec{\alpha}}f(\vec{x}_0)$ just like in one dimension denotes that we \textit{first} apply the derivative and \textit{then} plug in our point of development $x_0$.
+
+\subsubsection*{1st Step: $|\vec{\alpha}|=0$}
+For example, let's say our $|\vec{\alpha}|=0$. That means we only have one combination of indices that can make that happen, and that is:
+\begin{align}
+    \vec{\alpha}=(0,0,0)
+\end{align}
+So now all we have to do is to use our definitions from above and plug in all these values to obtain the first term of our expansion. 
+
+\subsubsection*{2nd Step: $|\vec{\alpha}|=1$}
+Now if $|\vec{\alpha}|=1$, the situation becomes a bit more complex, because we have three possible arrangements of $\vec{\alpha}$ that produce this absolute value:
+\begin{align}
+    \vec{\alpha} &= (1,0,0) \\
+    \vec{\alpha} &= (0,1,0) \\
+    \vec{\alpha} &= (0,0,1)
+\end{align}
+To get our next terms of summation, we have to plug in all these three combinations into our definitions and add the result.
+
+\subsubsection*{3rd Step: $|\vec{\alpha}|=2$}
+By continuing this process, you can then find for our next step $|\vec{\alpha}|=2$: 
+\begin{align}
+    \vec{\alpha} &= (1,1,0) \\
+    \vec{\alpha} &= (0,1,1) \\
+    \vec{\alpha} &= (1,0,1) \\
+    \vec{\alpha} &= (2,0,0) \\
+    \vec{\alpha} &= (0,2,0) \\
+    \vec{\alpha} &= (0,0,2)
+\end{align}
+Again, we have to plug in all of these into our definitions to obtain all the terms that we need in this step. 
+This process continues then into infinity.
+
+\subsubsection*{The Bracket raised to the power of a Vector}
+There is one last aspect of multivariate Taylor expansion that we should talk about. The meaning of:
+\begin{align}\label{eq:differencetaylor}
+    (\vec{x}-\vec{x}_0)^{\vec{\alpha}}
+\end{align}
+To explain this, I have to explicitly write out $\vec{x}_0$:
+\begin{align}
+    \vec{x}_0=(x_{01}, x_{02})
+\end{align}
+Expression (\ref{eq:differencetaylor}) seems extremely confusing at first because what does it mean to raise a vector by another vector? Well, in our convention, there is a clear definition of this, and it's really simple:
+\begin{align}
+    (\vec{x}-\vec{x}_0)^{\vec{\alpha}} = \left((x_1-x_{01}), (x_2-x_{02})\right)^{(\alpha_1, \alpha_2)} = (x_1-x_{01})^{\alpha_1}\cdot(x_2-x_{02})^{\alpha_2}
+\end{align}
+We are multiplying all our components, raised to the power of the corresponding component of $\vec{\alpha}$.
+
+\subsubsection*{Example of Multivariate Taylor Expansion}
+After this long theoretical preparation, let's do a simple example to illustrate the process in practice.
+Let's take a look at the function:
+\begin{align}
+f(x_1,x_2) = e^{x_1} \cos(x_2)    
+\end{align}
+Now we want to find a simpler expression for this. For this purpose, we can use our trusted tool, the Taylor Expansion, to find a simpler polynomial representation for this function. As you can see, the function depends on two variables, $x_1$ and $x_2$. Therefore, we have to use the Multivariate Taylor Expansion in this case.
+
+\subsubsection*{Preparations}
+Before we start with the expansion, we have to do some preparations. We have to choose a point of development $\vec{x}_0$. Normally, as physicists, we want to choose this point exactly at the position we are interested in, because only then later can we argue that we can throw away terms and still have an accurate description of the problem. In practice, you can often choose your coordinate system so that $\vec{x}_0$ becomes $\vec{0}$, which then simplifies the calculations. So we are going to choose $\vec{x}_0=\vec{0}$ in this example for convenience.
+\begin{align}
+    \vec{x}_0= \vec{0}
+\end{align}
+Our $\vec{x}$ is of course:
+\begin{align}
+    \vec{x}=(x_1, x_2)
+\end{align}
+
+\subsubsection*{1st Step ($|\vec{\alpha}|=0$)}
+
+\begin{table}[h!]
+    \centering
+    \renewcommand{\arraystretch}{1.5} 
+    \begin{tabular}{cccc}
+        \hline
+        $|\vec{\alpha}|=0$ & $D^{\vec{\alpha}}$ & $\left(\vec{x}-\vec{x_0}\right)^{\vec{\alpha}}$& $\vec{\alpha}!$\\
+        \hline
+        $(\alpha_1, \alpha_2)=(0, 0)$&$\frac{\partial^0}{\partial x_1^{0}\cdot \partial x_2^{0}}$& $(x_1-0)^0\cdot(x_2-0)^0$& $0!\cdot0!= 1$
+    \end{tabular}
+    \label{tab:taylor_example_1}
+\end{table}
+Now that we have found these important components, we can proceed and plug in our actual values: 
+\begin{align}
+        T_{(0,0)}&=\frac{1}{1}\left[\frac{\partial^0}{\partial x_1^{0}\cdot \partial x_2^{0}} f(x_1, x_2)\right]\bigg{|}_{(0,0)}(x_1-0)^0\cdot(x_2-0)^0\\
+        &=f(0,0)= e^{0} \cos(0) = 1
+\end{align}
+This already was our first step! Now let's go to the second step...
+
+\subsubsection*{2nd Step ($|\vec{\alpha}|=1$)}
+
+\begin{table}[h!]
+    \centering
+    \renewcommand{\arraystretch}{1.5} 
+    \begin{tabular}{cccc}
+        \hline
+        $|\vec{\alpha}|=1$ & $D^{\vec{\alpha}}$ & $\left(\vec{x}-\vec{x_0}\right)^{\vec{\alpha}}$& $\vec{\alpha}!$\\
+        \hline
+        $(\alpha_1, \alpha_2)=(1, 0)$&$\frac{\partial^1}{\partial x_1^{1}\cdot \partial x_2^{0}}$& $(x_1-0)^1\cdot(x_2-0)^0$ & $1!\cdot 0! = 1$\\
+        $(\alpha_1, \alpha_2)=(0, 1)$&$\frac{\partial^1}{\partial x_1^{0}\cdot \partial x_2^{1}}$& $(x_1-0)^0\cdot(x_2-0)^1$ &$0!\cdot 1! = 1$
+    \end{tabular}
+    \label{tab:taylor_example_2}
+\end{table}
+Now we again have the important components, and we can proceed to plug in our actual values: 
+\begin{align}
+        T_{(1,0)}&=\frac{1}{1}\left[\frac{\partial^1}{\partial x_1^{1}\cdot \partial x_2^{0}}f(x_1, x_2)\right]\bigg{|}_{(0,0)}(x_1-0)^1\cdot(x_2-0)^0\\
+        &=\eval{\frac{\partial}{\partial x_1}f(x_1,x_2)}_{(0,0)}x_1= \eval{\left[e^{x_1} \cos(x_2)\right]}_{(0,0)}x_1= x_1
+\end{align}
+Now we have to repeat this step for $T_{(0,1)}$:
+\begin{align}
+        T_{(0,1)}&=\frac{1}{1}\left[\frac{\partial^1}{\partial x_1^{0}\cdot \partial x_2^{1}}f(x_1, x_2)\right]\eval_{(0,0)}(x_1-0)^0\cdot(x_2-0)^1\\
+        &=\eval{\frac{\partial}{\partial x_2}f(x_1,x_2)}_{(0,0)}x_2= \eval{\left[-e^{x_1} \sin(x_2)\right]}_{(0,0)}= 0
+\end{align}
+
+\subsubsection*{3rd Step ($|\vec{\alpha}|=2$)}
+Now let's do a third and final step to finalize this example.
+\begin{table}[h!]
+    \centering
+    \renewcommand{\arraystretch}{1.5} 
+    \begin{tabular}{cccc}
+        \hline
+        $|\vec{\alpha}|=2$ & $D^{\vec{\alpha}}$ & $\left(\vec{x}-\vec{x_0}\right)^{\vec{\alpha}}$& $\vec{\alpha}!$\\
+        \hline
+        $(\alpha_1, \alpha_2)=(1, 1)$&$\frac{\partial^2}{\partial x_1^{1}\cdot \partial x_2^{1}}$& $(x_1-0)^1\cdot(x_2-0)^1$ &$1!\cdot 1! = 1$\\
+        $(\alpha_1, \alpha_2)=(2, 0)$&$\frac{\partial^2}{\partial x_1^{2}\cdot \partial x_2^{0}}$& $(x_1-0)^2\cdot(x_2-0)^0$ &$2!\cdot 0! = 2$\\
+        $(\alpha_1, \alpha_2)=(0, 2)$&$\frac{\partial^2}{\partial x_1^{0}\cdot \partial x_2^{2}}$& $(x_1-0)^0\cdot(x_2-0)^2$ &$0!\cdot 2! = 2$
+    \end{tabular}
+    \label{tab:taylor_example_3}
+\end{table}
+\begin{align}
+        T_{(1,1)}&=\frac{1}{1}\left[\frac{\partial^2}{\partial x_1^{1}\cdot \partial x_2^{1}}f(x_1, x_2)\right]\eval_{(0,0)}(x_1-0)^1\cdot(x_2-0)^1\\
+        &=\eval{\frac{\partial}{\partial x_1}\frac{\partial}{\partial x_2}f(x_1,x_2)}_{(0,0)}x_1\, \cdot x_2=  \eval{\left[-e^{x_1}\sin(x_2)\right]}_{(0,0)}= 0
+\end{align}
+\begin{align}
+T_{(2,0)}&=\frac{1}{2}\left[\frac{\partial^2}{\partial x_1^{2}\cdot \partial x_2^{0}}f(x_1, x_2)\right]\eval_{(0,0)}(x_1-0)^2\cdot(x_2-0)^0\\
+&=\frac{1}{2}\eval{\frac{\partial^2}{\partial x_1^2}f(x_1,x_2)}_{(0,0)}x_1^2 =  \frac{1}{2}\eval{\left[e^{x_1}\cos(x_2)\right]}_{(0,0)}x_1^2=\frac{1}{2}x_1^2
+\end{align}
+\begin{align}
+T_{(0,2)}&=\frac{1}{2}\left[\frac{\partial^2}{\partial x_1^{0}\cdot \partial x_2^{2}}f(x_1, x_2)\right]\eval_{(0,0)}(x_1-0)^0\cdot(x_2-0)^2\\
+&=\frac{1}{2}\eval{\frac{\partial^2}{\partial x_2^2}f(x_1,x_2)}_{(0,0)}x_2^2 = \frac{1}{2} \eval{\left[-e^{x_1}\cos(x_2)\right]}_{(0,0)}x_2^2=-\frac{1}{2}x_2^2
+\end{align}
+\subsection*{Putting it all together}
+Okay, now that we have found all of those terms, let's put them together:
+\begin{align}
+    f(x_1, x_2)=e^{x_1} \cos(x_2)  \approx 1+ x_1+ \frac{x_1^2}{2}-\frac{x_2^2}{2} 
+\end{align}
+
+\subsection{Functionals: Functions of Functions}
+Now that we have brushed up on how to handle multivariable functions, we need to introduce a completely new mathematical object: the \textbf{Functional}. 
+
+If you are seeing this for the first time, take a deep breath. It sounds abstract, but the core idea is actually quite intuitive. 
+
+\subsubsection*{The Core Concept and Notation}
+Let us contrast a functional with something you already know intimately: a standard function. 
+A regular function, like $f(x) = x^2$, takes a \textit{number} as an input, and spits out a \textit{number} as an output. You plug in $x=2$, and you get out $4$. Notice the parentheses $()$; they tell us the input is a standard variable.
+
+A \textbf{functional}, on the other hand, takes an \textit{entire function} as an input, and spits out a \textit{number} as an output. 
+To distinguish it from regular functions, we use square brackets $[]$. We write a functional as $F[y(x)]$. 
+
+When you evaluate $F[y(x)]$, you do not plug in a single number like $x=5$. Instead, you plug in a whole shape, or a path, like the entire curve $y(x) = \sin(x)$. The functional looks at that entire shape and assigns a single numeric value to it. 
+
+\subsubsection*{A Simple Example: The Arc Length}
+The best way to understand this is with an example you actually already know from basic calculus: measuring the length of a curve.
+
+Imagine two points on a piece of paper, Point $A$ and Point $B$. There are infinitely many lines (functions) you could draw to connect $A$ to $B$. 
+Let us imagine two specific paths:
+\begin{itemize}
+    \item $y_1(x)$: A perfectly straight line connecting $A$ and $B$.
+    \item $y_2(x)$: A wild, winding, zig-zagging line connecting $A$ and $B$.
+\end{itemize}
+
+We can define a functional, let's call it $L[y(x)]$, which calculates the length of whatever path you feed into it. 
+If we feed it our straight line, it spits out a small number, because the path is short. Let's say $L[y_1] = 5$.
+If we feed it our wild zig-zag line, it spits out a much larger number. Let's say $L[y_2] = 45$.
+
+The mathematical "machine" that actually calculates this length is an integral. Almost all functionals in physics are built out of integrals. The arc length functional looks like this:
+\begin{align}
+    L[y(x)] = \int_{x_A}^{x_B} \sqrt{1 + \left( \frac{\text{d}y}{\text{d}x} \right)^2} \text{d}x
+\end{align}
+Notice what happens here: when you plug a specific function (like $y_1(x)$) into this integral and evaluate it from $x_A$ to $x_B$, all the $x$'s are integrated away. You are left with just a single number: the total length of the curve.
+
+\subsection{Physics Preparations}
+\subsubsection{Generalized Coordinates}
+The location of a particle is given by the vector $\vec{r}$. \newline
+The velocity of a particle is defined as the time derivative of the location variable, 
+\begin{align}
+    \frac{\text{d}\vec{r}}{\text{d}t} = \dot{\vec{r}}
+\end{align}
+The acceleration of a particle is defined as the time derivative of the velocity or the second time derivative of the location:
+\begin{align}
+    \frac{\text{d}^2\vec{r}}{\text{d}t^2} = \Ddot{\vec{r}}
+\end{align}
+
+In analytical mechanics, it is often convenient to express the locations of particles in terms of other coordinates than the Cartesian coordinates. For example, consider a pendulum. The location of the particle is characterized by the angle theta only. So by choosing this coordinate, we drop one degree of freedom. This means, to know the position of the particle, we no longer need to give two quantities, the x and the y component, but it is enough to know the angle theta to retrieve the position of the pendulum, which is awesome, because fewer degrees of freedom makes things easier to solve. We call these alternative coordinates such as theta \textit{generalized coordinates} and denote them by $q$. The collection of all generalized coordinates chosen this way need to fulfill just one condition: They must characterize the state of the system fully for all times. We can unite all the generalized coordinates into a vector  $\vec{q}=(q_1(t), q_2(t), \dots, q_n(t))$. The derivative of these generalized coordinates are called generalized velocities $\dot{\vec{q}}=(\dot{q}_1(t), \dot{q}_2(t),\dots,\dot{q}_n(t))$.
+
+\section{The Action and the Lagrangian}
+Imagine a particle moving from point $A$ at time $t_1$ to point $B$ at time $t_2$. Out of all the infinitely many paths $\vec{q}(t)$ the particle \textit{could} physically take, how does nature choose the \textit{actual} path the particle follows?
+It turns out that in nature there is a certain number associated with each possible path. For a first start, imagine it like a cost for going from one place to another. In analytical mechanics, we propose that Nature chooses the path with the lowest cost of all the possible paths.
+The \textbf{Principle of Least Action} states that the actual path the particle takes in the real world is the specific function $\vec{q}(t)$ that minimizes the Action. Finding that special path is the entire goal of Lagrangian mechanics!
+
+\subsubsection*{Action}
+We can conclude that the Action has to be a functional, that takes a trajectory and returns the total cost of taking this trajectory to us.
+So our strategy to find this cost would be to calculate the cost for every instant in time and add it all up. So this means we have an integration over time of some function that gives us the path's cost rate at every moment. We call this function $L$ for Lagrangian. For the total cost (that is the cost added up over the whole time) that we call Action, we choose the letter $S$. So putting this all together we reasoned our way to a very general expression of our Action: 
+\begin{align} \label{eq:action}
+        S[q(t), \dot{q}(t)]=\int_{t_1}^{t_2} L(q(t), \dot{q}(t), t)\,\text{d}t
+\end{align}
+Please note that in this notation and from now on we leave out the vector arrows but we assume that $q(t)$ and $\dot{q}(t)$ can generally be vectors.
+
+\textbf{Quick Question:} Why is $L$ a function and not a functional? \textbf{Answer:} As you can see from the round brackets, we defined $L$ as a function. We just plug in a certain position and velocity into $L$ and it gives us a number back. On the contrary, for $S$ the trajectory as a whole gets evaluated (as we are integrating over every instant in time).
+
+\subsubsection{Euler-Lagrange Equations}
+Okay, so now we have a description for the Action of a path. But we still have no idea what $L$ actually is, or how we can make any progress from here. If you have a little more experience with physics, then you know that we would love to find a differential equation right now that we can work with. In classical mechanics, these are the equations of motion; in quantum mechanics, we have the Schrödinger equation; and in electrodynamics, we have Maxwell's equations. And this is exactly what we are going to do. We will first find the Euler-Lagrange equations and then deduce the shape of $L$ from them by demanding that they yield physically meaningful solutions. This way, $L$ will no longer be just some abstract quantity.
+
+Our task now is to figure out how we can find the Lagrangian $L$ for which $S$ becomes minimal. 
+Let's think about our paths as follows. Let's say our paths $q$ we are testing out are the path we are looking for $q_0$, $\dot{q}_0$ plus a \textit{small} perturbation $\delta q$, $\delta \dot{q}$, so we obtain:
+    \begin{align}
+        q &= q_0 + \delta q\\
+        \dot{q} &= \dot{q}_0+\delta \dot{q}\\
+        \text{and}&\text{ therefore}\\
+        L(q_0+\delta& q, \dot{q}_0 + \delta \dot{q}, t)
+    \end{align} 
+    So we are saying that we test out different paths $q(t)$, but they are not exactly the path the particle would take (we call this path $\vec{q}_0$), but just a bit different.    
+    \begin{align}
+        q &= q_0 + \delta q\\
+        \Leftrightarrow\delta q &= q - q_0
+    \end{align}
+    Our goal now is to find the Lagrangian which describes our motion, e.g., the path which minimizes the action. That should be the path where $\delta q$ and $\delta \dot{q}$ disappear.
+    Before we proceed, there is an important property of the variation $\delta$. We demand that at the start and at the end point of our path, the trajectory is always the same, i.e., we always have a fixed starting point and ending point. That means that $\delta q(t_1) = \delta q(t_2) = 0$.    
+
+    \subsubsection*{Finding the minimum of the Action}
+    Now we want to find the minimum of the Action. For this, we have to think about what happens at a minimum. For functions, we expect that at a minimum an infinitely small change in the variables does not change the value of the function; in other words, the derivative of that function becomes zero. For our Functional $S$, we can apply a similar logic. We say that the difference of $S$ between a path close to the minimum and the minimum should approach zero. In other words:
+    \begin{align}
+        S[q(t)+\delta q(t), \dot{q}(t)+\delta \dot{q}(t)] - S[q(t), \dot{q}(t)]  \overset{!}{=} 0
+    \end{align}
+    We call this difference Variation of the Action $S$ and denote it by $\delta S$. We found the condition:
+    \begin{align}
+        \delta S = 0
+    \end{align}
+    Now we can also go ahead and plug in our integral definitions for $S$ to obtain:
+    \begin{align}
+        \delta S=\int_{t_1}^{t_2} L(q(t)+\delta q(t),\,\dot{q}(t)+\delta \dot{q}(t),\, t)\,\text{d}t - \int_{t_1}^{t_2} L(q(t), \dot{q}(t), t)\,\text{d}t
+    \end{align}
+    Now comes the probably hardest conceptual step in this process. We are now confronted with a function $L(q(t)+\delta q(t),\,\dot{q}(t)+\delta \dot{q}(t),\, t)$ that we don't really know how to deal with. It looks really intimidating. But luckily, we have a tool to deal with such complicated functions; we can try to do a Taylor Expansion on it to make progress! We have to use the Multivariate Taylor Expansion here as you might have guessed, as we have multiple variables involved. Quick Question before we go any further: What is the point of development (our $x_0$) that we want to choose for this Taylor expansion? As you might have guessed, it is the optimal path $q(t)$, because this is the path that we know as the optimal path and we have only small changes around this trajectory (Remember what we discussed in the earlier chapters). 
+    So what we do is to just go ahead and expand this Lagrangian as a Taylor series around the path which delivers the minimal action, e.g., $L(q_0, \dot{q}_0, t)$.
+
+    \subsubsection{Taylor Expansion of $L(q,\dot{q}, t)$}
+    First, we need to find a general expression for our Taylor polynomial for $L$. Then we will plug in our new, slightly different trajectories. 
+    Let's first remember our formula for the Multivariate Taylor Expansion:
+    \begin{align}
+    T(\vec{x};\vec{a}) = \sum^\infty_{|\vec{\alpha}|=0}\frac{D^{\Vec{\alpha}}f(\vec{x}_0)}{\vec{\alpha}!}\left(\vec{x}-\vec{x_0}\right)^{\vec{\alpha}}
+    \end{align}
+
+    As we said, we choose the variation-free trajectory as our point of development: 
+    \begin{align}
+    \vec{x}_0=(q(t), \dot{q}(t)) 
+\end{align}
+
+Now let's use the Multivariate Taylor Expansion. We want to find an expansion for our function $L(q,\dot{q},t)$, but we don't touch $t$ and only expand in $q$ and $\dot{q}$:
+\begin{align*}
+    L(q, \dot{q}, t) &= \frac{1}{0!\cdot 0!}\eval{L(q, \dot{q}, t)}_{(q(t), \dot{q}(t))}(q-q(t))^0(\dot{q}-\dot{q}(t))^0 \\
+    &\quad + \frac{1}{1!\cdot 0!}\eval{\frac{\partial}{\partial q}L(q, \dot{q}, t)}_{(q(t), \dot{q}(t))}(q-q(t))^1(\dot{q}-\dot{q}(t))^0 \\
+    &\quad + \frac{1}{0!\cdot 1!}\eval{\frac{\partial}{\partial \dot{q}}L(q, \dot{q}, t)}_{(q(t), \dot{q}(t))}(q-q(t))^0(\dot{q}-\dot{q}(t))^1 \\
+    &\quad + \frac{1}{1!\cdot 1!}\eval{\frac{\partial^2}{\partial q\partial\dot{q}}L(q, \dot{q}, t)}_{(q(t), \dot{q}(t))}(q-q(t))^1(\dot{q}-\dot{q}(t))^1 \\
+    &\quad + \frac{1}{2!\cdot 0!}\eval{\frac{\partial^2}{\partial q^2}L(q, \dot{q}, t)}_{(q(t), \dot{q}(t))}(q-q(t))^2(\dot{q}-\dot{q}(t))^0 \\
+    &\quad + \frac{1}{0!\cdot 2!}\eval{\frac{\partial^2}{\partial \dot{q}^2}L(q, \dot{q}, t)}_{(q(t), \dot{q}(t))}(q-q(t))^0(\dot{q}-\dot{q}(t))^2+\dots \\
+    &=L(q(t),\dot{q}(t),t)+\frac{\partial L(q(t),\dot{q}(t), t)}{\partial q}(q-q(t)) \\
+    &\quad + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial \dot{q}}(\dot{q}-\dot{q}(t)) \\
+    &\quad + \frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial q \partial \dot{q}}(q-q(t))(\dot{q}-\dot{q}(t)) \\
+    &\quad + \frac{1}{2}\frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial q^2}(q-q(t))^2 \\
+    &\quad + \frac{1}{2}\frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial \dot{q}^2}(\dot{q}-\dot{q}(t))^2+\dots
+\end{align*}
+So far, so good. Now we want to find the expression for $L(q(t)+\delta q(t),\,\dot{q}(t)+\delta \dot{q}(t),\, t)$, so what we do is we plug in $q(t)+\delta q$ for our $q$ and $\dot{q}(t)+\delta \dot{q}$ for our $\dot{q}$. 
+\begin{align*}
+    L(q(t)+\delta q(t), \dot{q}(t)+\delta \dot{q}(t), t) &= L(q(t),\dot{q}(t),t) \\
+    &\quad + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial q}(q(t)+\delta q-q(t)) \\
+    &\quad + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial \dot{q}}(\dot{q}(t)+\delta \dot{q}-\dot{q}(t)) \\
+    &\quad + \frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial q \partial \dot{q}}(q(t)+\delta q-q(t))(\dot{q}(t)+\delta \dot{q}-\dot{q}(t)) \\
+    &\quad + \frac{1}{2}\frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial q^2}(q(t)+\delta q-q(t))^2 \\
+    &\quad + \frac{1}{2}\frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial \dot{q}^2}(\dot{q}(t)+\delta \dot{q}-\dot{q}(t))^2+\dots
+\end{align*}
+Which finally results in:
+\begin{align*}
+    L(q(t)+\delta q(t), \dot{q}(t)+\delta \dot{q}(t), t) &= L(q(t),\dot{q}(t),t) + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial q}\delta q \\
+    &\quad + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial \dot{q}}\delta \dot{q} \\
+    &\quad + \frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial q \partial \dot{q}}\delta q\delta \dot{q} \\
+    &\quad + \frac{1}{2}\frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial q^2}\delta q^2 \\
+    &\quad + \frac{1}{2}\frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial \dot{q}^2}\delta \dot{q}^2+\dots
+\end{align*}
+As we know that our variations $\delta q$ and $\delta \dot{q}$ are very small, it is reasonable to ignore higher-order terms of our Taylor expansion and only consider terms up to the first order.
+So we obtain as a final result:
+\begin{align*}
+    L(q(t)+\delta q(t), \dot{q}(t)+\delta \dot{q}(t), t) \approx L(q(t),\dot{q}(t),t) + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial q}\delta q + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial \dot{q}}\delta \dot{q}
+\end{align*}
+
+    Now we again plug this into our definition for the variation of the Action and obtain the following:
+    
+    \begin{align}
+        \delta S = \int_{t_1}^{t_2} \left[L(q,\dot{q}, t) + \frac{\partial L}{\partial q}\delta q +\frac{\partial L}{\partial \dot{q}}\delta\dot{q}\right] \text{d}t - \int_{t_1}^{t_2} L(q,\dot{q}, t)\, \text{d}t 
+    \end{align}
+    Subtracting out:
+    \begin{align}
+        \delta S = \int_{t_1}^{t_2}\left[ \frac{\partial L}{\partial q}\delta q +\frac{\partial L}{\partial \dot{q}}\delta\dot{q} \right] \text{d}t
+    \end{align}
+    This looks quite handy, but we are not quite done yet. In the next step, we need to apply our thought process from before. We already said that the Variation of the Action $\delta S $ has to become zero for our Action to be at a Minimum. So we can use that condition in our next step:
+    \begin{align}
+        \delta S = \int_{t_1}^{t_2}\left[ \frac{\partial L}{\partial q}\delta q +\frac{\partial L}{\partial \dot{q}}\delta\dot{q} \right] \text{d}t = 0 
+    \end{align}
+    
+    Now we are almost there. The last step now is to use integration by parts for the second term inside the integral as follows:
+    
+    \begin{align}
+        \int_{t_1}^{t_2}\frac{\partial L}{\partial \dot{q}}\,\delta\dot{q}\,\text{d}t=\eval{\frac{\partial L}{\partial \dot{q}}\,\delta q}_{t_1}^{t_2}-\int_{t_1}^{t_2}\left[\frac{\text{d}}{\text{d}t}\left[\frac{\partial L}{\partial \dot{q}}\right]\,\delta q\right]\text{d}t
+    \end{align}
+    We earlier explained that the variation has to be zero at the start and at the end of our trajectory. So by definition, the variations $\delta q(t_1)$ and $\delta q(t_2)$ disappear in the beginning and in the end of our path, i.e., $\delta q(t_1) = \delta q(t_2) = 0$. Therefore, the first term in this integral immediately disappears. We are left with: 
+    \begin{align}
+        \int_{t_1}^{t_2}\frac{\partial L}{\partial \dot{q}}\,\delta\dot{q}\,\text{d}t = -\int_{t_1}^{t_2}\left[\frac{\text{d}}{\text{d}t}\left(\frac{\partial L}{\partial \dot{q}}\right)\,\delta q\right]\text{d}t
+    \end{align}
+    We can now plug this back into the equation for the variation of the Action and obtain:
+\begin{align}
+    \delta S &= \int_{t_1}^{t_2} \left[\frac{\partial L}{\partial q}\delta q -\frac{\text{d}}{\text{d}t}\left(\frac{\partial L}{\partial \dot{q}}\right)\,\delta q \right] \text{d}t=0 
+\end{align}
+    Now we can pull the $\delta q$ outside of the expression: 
+    \begin{align}
+    \delta S &= \int_{t_1}^{t_2} \,\delta q \left[\frac{\partial L}{\partial q} -\frac{\text{d}}{\text{d}t}\left(\frac{\partial L}{\partial \dot{q}}\right)\right] \text{d}t=0 
+    \end{align}
+    As we can choose $\delta q$ arbitrarily, the equation is only true in general if the bracket term inside the integral is zero, i.e.: 
+    \begin{align}
+        \frac{\partial L}{\partial q}-\frac{\text{d}}{\text{d}t}\left(\frac{\partial L}{\partial \dot{q}}\right) = 0
+    \end{align} 
+    This equation is true for all the generalized coordinates in the system. So in the most general form, we get ($i=1,2, \dots ,n$):
+    \begin{align}
+        \frac{\partial L}{\partial q_i}-\frac{\text{d}}{\text{d}t}\left(\frac{\partial L}{\partial \dot{q_i}}\right) = 0
+    \end{align}
+    These equations are called the Lagrange Equations or Euler-Lagrange Equations.
+    We will soon see that if you know the Lagrangian of a system, then those equations connect the accelerations, velocities, and coordinates, i.e., they are the equations of motion for the system in question.
+    Now finally, let's look at an example.
+
+\end{document}
