@@ -13,3 +13,8 @@ This note collection is currently being **built in public**. Chapters will be up
 
 ### 🛠️ How to Contribute (Building in Public)
 Since I am writing this live, your feedback is the most valuable asset. Whether you are a struggling student or a seasoned professor, I invite you to help me make this note collection as accessible as possible.
+
+### 📚 Resources & References
+The structure and philosophy of these notes are heavily inspired by classic literature in the field. 
+
+* **Mechanics (Course of Theoretical Physics, Volume 1) by L.D. Landau and E.M. Lifshitz:** The approach used in these notes, i.e. starting immediately with the Principle of Least Action, is directly adapted from this text. Landau and Lifshitz offer a brilliant and concise formulation of classical mechanics. However, they frequently omit intermediate mathematical steps. These notes can be used as a companion guide to their book, aiming to fill in those mathematical gaps and explicitly show the derivations that are often left to the reader.
