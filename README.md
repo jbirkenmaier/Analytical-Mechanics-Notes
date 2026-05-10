@@ -12,7 +12,7 @@ This note collection is currently being **built in public**. Chapters will be up
   Content still not entirely planned out
 
 ### 🛠️ How to Contribute (Building in Public)
-Since I am writing this live, your feedback is the most valuable asset. Whether you are a struggling student or a seasoned professor, I invite you to help me make this note collection as accessible as possible.
+Since I am writing this live, your feedback is the most valuable asset. Whether you are a struggling student or a seasoned professor, I invite you to help me make this note collection as accessible (and correct) as possible.
 
 ### 📚 Resources & References
 The structure and philosophy of these notes are heavily inspired by classic literature in the field. 
