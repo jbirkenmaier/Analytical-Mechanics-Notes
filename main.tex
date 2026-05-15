@@ -436,6 +436,27 @@ So we obtain as a final result:
     \end{align}
     These equations are called the Lagrange Equations or Euler-Lagrange Equations.
     We will soon see that if you know the Lagrangian of a system, then those equations connect the accelerations, velocities, and coordinates, i.e., they are the equations of motion for the system in question.
+    
+    \subsection{Properties of the Lagrangian L}
+    The Lagrangian has some very important properties we have to discuss before we look at an example for how to use the Euler-Lagrange-Equations to find the equations of motion for a mechanical system. 
+    
+    \subsubsection*{Scale Invariance of the Euler-Lagrange Equations}
+    We can multiply the Lagrangian by an arbitrary constant factor without changing the Euler-Lagrange-Equations (Which remember are the equations of motion for the mechanical system).
+    Lets proof this. Consider a Lagrange function $L'$ that is scaled by a constant factor $\alpha$
+    \begin{align}
+    	L'=L\cdot\alpha
+    \end{align}
+    Lets plug this into our ELE (Euler-Lagrange-Equations) and look what happens.
+    
+    \begin{align}
+        \frac{\partial L'}{\partial q}-\frac{\text{d}}{\text{d}t}\left(\frac{\partial L'}{\partial \dot{q}}\right) = 0\\
+        \frac{\partial}{\partial q}\left[L\cdot\alpha\right]-\frac{\text{d}}{\text{d}t}\left(\frac{\partial}{\partial \dot{q}}\left[L\cdot\alpha\right]\right) = 0\\
+        \alpha\frac{\partial}{\partial q}\left[L\right]-\alpha\frac{\text{d}}{\text{d}t}\left(\frac{\partial}{\partial \dot{q}}\left[L\right]\right) = 0
+    \end{align}
+    We can now of course divide by $\alpha$ and obtain
+    \begin{align}\frac{\partial}{\partial q}\left[L\right]-\frac{\text{d}}{\text{d}t}\left(\frac{\partial}{\partial \dot{q}}\left[L\right]\right) = 0
+    \end{align}
+    
+    \subsubsection*{Scale Invariance of the Euler-Lagrange Equations}
     Now finally, let's look at an example.
-
 \end{document}
