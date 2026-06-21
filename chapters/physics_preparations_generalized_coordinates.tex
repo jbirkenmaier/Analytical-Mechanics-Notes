@@ -1,0 +1,12 @@
+\section{Generalized Coordinates}
+The location of a particle is given by the vector $\vec{r}$. \newline
+The velocity of a particle is defined as the time derivative of the location variable, 
+\begin{align}
+    \frac{\text{d}\vec{r}}{\text{d}t} = \dot{\vec{r}}
+\end{align}
+The acceleration of a particle is defined as the time derivative of the velocity or the second time derivative of the location:
+\begin{align}
+    \frac{\text{d}^2\vec{r}}{\text{d}t^2} = \Ddot{\vec{r}}
+\end{align}
+
+In analytical mechanics, it is often convenient to express the locations of particles in terms of other coordinates than the Cartesian coordinates. For example, consider a pendulum. The location of the particle is characterized by the angle theta only. So by choosing this coordinate, we drop one degree of freedom. This means, to know the position of the particle, we no longer need to give two quantities, the x and the y component, but it is enough to know the angle theta to retrieve the position of the pendulum, which is awesome, because fewer degrees of freedom makes things easier to solve. We call these alternative coordinates such as theta \textit{generalized coordinates} and denote them by $q$. The collection of all generalized coordinates chosen this way need to fulfill just one condition: They must characterize the state of the system fully for all times. We can unite all the generalized coordinates into a vector  $\vec{q}=(q_1(t), q_2(t), \dots, q_n(t))$. The derivative of these generalized coordinates are called generalized velocities $\dot{\vec{q}}=(\dot{q}_1(t), \dot{q}_2(t),\dots,\dot{q}_n(t))$.

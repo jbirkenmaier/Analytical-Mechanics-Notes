@@ -1,0 +1,125 @@
+\section{Euler-Lagrange Equations}
+Okay, so now we have a description for the Action of a path. But we still have no idea what $L$ actually is, or how we can make any progress from here. If you have a little more experience with physics, then you know that we would love to find a differential equation right now that we can work with. In classical mechanics, these are the equations of motion; in quantum mechanics, we have the Schrödinger equation; and in electrodynamics, we have Maxwell's equations. And this is exactly what we are going to do. We will first find the Euler-Lagrange equations and then deduce the shape of $L$ from them by demanding that they yield physically meaningful solutions. This way, $L$ will no longer be just some abstract quantity.
+
+Our task now is to figure out how we can find the Lagrangian $L$ for which $S$ becomes minimal. 
+Let's think about our paths as follows. Let's say our paths $q$ we are testing out are the path we are looking for $q_0$, $\dot{q}_0$ plus a \textit{small} perturbation $\delta q$, $\delta \dot{q}$, so we obtain:
+    \begin{align}
+        q &= q_0 + \delta q\\
+        \dot{q} &= \dot{q}_0+\delta \dot{q}\\
+        \text{and}&\text{ therefore}\\
+        L(q_0+\delta& q, \dot{q}_0 + \delta \dot{q}, t)
+    \end{align} 
+    So we are saying that we test out different paths $q(t)$, but they are not exactly the path the particle would take (we call this path $\vec{q}_0$), but just a bit different.    
+    \begin{align}
+        q &= q_0 + \delta q\\
+        \Leftrightarrow\delta q &= q - q_0
+    \end{align}
+    Our goal now is to find the Lagrangian which describes our motion, e.g., the path which minimizes the action. That should be the path where $\delta q$ and $\delta \dot{q}$ disappear.
+    Before we proceed, there is an important property of the variation $\delta$. We demand that at the start and at the end point of our path, the trajectory is always the same, i.e., we always have a fixed starting point and ending point. That means that $\delta q(t_1) = \delta q(t_2) = 0$
+\subsection*{Finding the minimum of the Action}
+    Now we want to find the minimum of the Action. For this, we have to think about what happens at a minimum. For functions, we expect that at a minimum an infinitely small change in the variables does not change the value of the function; in other words, the derivative of that function becomes zero. For our Functional $S$, we can apply a similar logic. We say that the difference of $S$ between a path close to the minimum and the minimum should approach zero. In other words:
+    \begin{align}
+        S[q(t)+\delta q(t), \dot{q}(t)+\delta \dot{q}(t)] - S[q(t), \dot{q}(t)]  \overset{!}{=} 0
+    \end{align}
+    We call this difference Variation of the Action $S$ and denote it by $\delta S$. We found the condition:
+    \begin{align}
+        \delta S = 0
+    \end{align}
+    Now we can also go ahead and plug in our integral definitions for $S$ to obtain:
+    \begin{align}
+        \delta S=\int_{t_1}^{t_2} L(q(t)+\delta q(t),\,\dot{q}(t)+\delta \dot{q}(t),\, t)\,\text{d}t - \int_{t_1}^{t_2} L(q(t), \dot{q}(t), t)\,\text{d}t
+    \end{align}
+    Now comes the probably hardest conceptual step in this process. We are now confronted with a function $L(q(t)+\delta q(t),\,\dot{q}(t)+\delta \dot{q}(t),\, t)$ that we don't really know how to deal with. It looks really intimidating. But luckily, we have a tool to deal with such complicated functions; we can try to do a Taylor Expansion on it to make progress! We have to use the Multivariate Taylor Expansion here as you might have guessed, as we have multiple variables involved. Quick Question before we go any further: What is the point of development (our $x_0$) that we want to choose for this Taylor expansion? As you might have guessed, it is the optimal path $q(t)$, because this is the path that we know as the optimal path and we have only small changes around this trajectory (Remember what we discussed in the earlier chapters). 
+    So what we do is to just go ahead and expand this Lagrangian as a Taylor series around the path which delivers the minimal action, e.g., $L(q_0, \dot{q}_0, t)$.
+
+    \subsubsection{Taylor Expansion of $L(q,\dot{q}, t)$}
+    First, we need to find a general expression for our Taylor polynomial for $L$. Then we will plug in our new, slightly different trajectories. 
+    Let's first remember our formula for the Multivariate Taylor Expansion:
+    \begin{align}
+    T(\vec{x};\vec{a}) = \sum^\infty_{|\vec{\alpha}|=0}\frac{D^{\Vec{\alpha}}f(\vec{x}_0)}{\vec{\alpha}!}\left(\vec{x}-\vec{x_0}\right)^{\vec{\alpha}}
+    \end{align}
+
+    As we said, we choose the variation-free trajectory as our point of development: 
+    \begin{align}
+    \vec{x}_0=(q(t), \dot{q}(t)) 
+\end{align}
+
+Now let's use the Multivariate Taylor Expansion. We want to find an expansion for our function $L(q,\dot{q},t)$, but we don't touch $t$ and only expand in $q$ and $\dot{q}$:
+\begin{align*}
+    L(q, \dot{q}, t) &= \frac{1}{0!\cdot 0!}\eval{L(q, \dot{q}, t)}_{(q(t), \dot{q}(t))}(q-q(t))^0(\dot{q}-\dot{q}(t))^0 \\
+    &\quad + \frac{1}{1!\cdot 0!}\eval{\frac{\partial}{\partial q}L(q, \dot{q}, t)}_{(q(t), \dot{q}(t))}(q-q(t))^1(\dot{q}-\dot{q}(t))^0 \\
+    &\quad + \frac{1}{0!\cdot 1!}\eval{\frac{\partial}{\partial \dot{q}}L(q, \dot{q}, t)}_{(q(t), \dot{q}(t))}(q-q(t))^0(\dot{q}-\dot{q}(t))^1 \\
+    &\quad + \frac{1}{1!\cdot 1!}\eval{\frac{\partial^2}{\partial q\partial\dot{q}}L(q, \dot{q}, t)}_{(q(t), \dot{q}(t))}(q-q(t))^1(\dot{q}-\dot{q}(t))^1 \\
+    &\quad + \frac{1}{2!\cdot 0!}\eval{\frac{\partial^2}{\partial q^2}L(q, \dot{q}, t)}_{(q(t), \dot{q}(t))}(q-q(t))^2(\dot{q}-\dot{q}(t))^0 \\
+    &\quad + \frac{1}{0!\cdot 2!}\eval{\frac{\partial^2}{\partial \dot{q}^2}L(q, \dot{q}, t)}_{(q(t), \dot{q}(t))}(q-q(t))^0(\dot{q}-\dot{q}(t))^2+\dots \\
+    &=L(q(t),\dot{q}(t),t)+\frac{\partial L(q(t),\dot{q}(t), t)}{\partial q}(q-q(t)) \\
+    &\quad + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial \dot{q}}(\dot{q}-\dot{q}(t)) \\
+    &\quad + \frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial q \partial \dot{q}}(q-q(t))(\dot{q}-\dot{q}(t)) \\
+    &\quad + \frac{1}{2}\frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial q^2}(q-q(t))^2 \\
+    &\quad + \frac{1}{2}\frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial \dot{q}^2}(\dot{q}-\dot{q}(t))^2+\dots
+\end{align*}
+So far, so good. Now we want to find the expression for $L(q(t)+\delta q(t),\,\dot{q}(t)+\delta \dot{q}(t),\, t)$, so what we do is we plug in $q(t)+\delta q$ for our $q$ and $\dot{q}(t)+\delta \dot{q}$ for our $\dot{q}$. 
+\begin{align*}
+    L(q(t)+\delta q(t), \dot{q}(t)+\delta \dot{q}(t), t) &= L(q(t),\dot{q}(t),t) \\
+    &\quad + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial q}(q(t)+\delta q-q(t)) \\
+    &\quad + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial \dot{q}}(\dot{q}(t)+\delta \dot{q}-\dot{q}(t)) \\
+    &\quad + \frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial q \partial \dot{q}}(q(t)+\delta q-q(t))(\dot{q}(t)+\delta \dot{q}-\dot{q}(t)) \\
+    &\quad + \frac{1}{2}\frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial q^2}(q(t)+\delta q-q(t))^2 \\
+    &\quad + \frac{1}{2}\frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial \dot{q}^2}(\dot{q}(t)+\delta \dot{q}-\dot{q}(t))^2+\dots
+\end{align*}
+Which finally results in:
+\begin{align*}
+    L(q(t)+\delta q(t), \dot{q}(t)+\delta \dot{q}(t), t) &= L(q(t),\dot{q}(t),t) + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial q}\delta q \\
+    &\quad + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial \dot{q}}\delta \dot{q} \\
+    &\quad + \frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial q \partial \dot{q}}\delta q\delta \dot{q} \\
+    &\quad + \frac{1}{2}\frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial q^2}\delta q^2 \\
+    &\quad + \frac{1}{2}\frac{\partial^2 L(q(t),\dot{q}(t), t)}{\partial \dot{q}^2}\delta \dot{q}^2+\dots
+\end{align*}
+As we know that our variations $\delta q$ and $\delta \dot{q}$ are very small, it is reasonable to ignore higher-order terms of our Taylor expansion and only consider terms up to the first order.
+So we obtain as a final result:
+\begin{align*}
+    L(q(t)+\delta q(t), \dot{q}(t)+\delta \dot{q}(t), t) \approx L(q(t),\dot{q}(t),t) + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial q}\delta q + \frac{\partial L(q(t),\dot{q}(t), t)}{\partial \dot{q}}\delta \dot{q}
+\end{align*}
+
+    Now we again plug this into our definition for the variation of the Action and obtain the following:
+    
+    \begin{align}
+        \delta S = \int_{t_1}^{t_2} \left[L(q,\dot{q}, t) + \frac{\partial L}{\partial q}\delta q +\frac{\partial L}{\partial \dot{q}}\delta\dot{q}\right] \text{d}t - \int_{t_1}^{t_2} L(q,\dot{q}, t)\, \text{d}t 
+    \end{align}
+    Subtracting out:
+    \begin{align}
+        \delta S = \int_{t_1}^{t_2}\left[ \frac{\partial L}{\partial q}\delta q +\frac{\partial L}{\partial \dot{q}}\delta\dot{q} \right] \text{d}t
+    \end{align}
+    This looks quite handy, but we are not quite done yet. In the next step, we need to apply our thought process from before. We already said that the Variation of the Action $\delta S $ has to become zero for our Action to be at a Minimum. So we can use that condition in our next step:
+    \begin{align}
+        \delta S = \int_{t_1}^{t_2}\left[ \frac{\partial L}{\partial q}\delta q +\frac{\partial L}{\partial \dot{q}}\delta\dot{q} \right] \text{d}t = 0 
+    \end{align}
+    
+    Now we are almost there. The last step now is to use integration by parts for the second term inside the integral as follows:
+    
+    \begin{align}
+        \int_{t_1}^{t_2}\frac{\partial L}{\partial \dot{q}}\,\delta\dot{q}\,\text{d}t=\eval{\frac{\partial L}{\partial \dot{q}}\,\delta q}_{t_1}^{t_2}-\int_{t_1}^{t_2}\left[\frac{\text{d}}{\text{d}t}\left[\frac{\partial L}{\partial \dot{q}}\right]\,\delta q\right]\text{d}t
+    \end{align}
+    We earlier explained that the variation has to be zero at the start and at the end of our trajectory. So by definition, the variations $\delta q(t_1)$ and $\delta q(t_2)$ disappear in the beginning and in the end of our path, i.e., $\delta q(t_1) = \delta q(t_2) = 0$. Therefore, the first term in this integral immediately disappears. We are left with: 
+    \begin{align}
+        \int_{t_1}^{t_2}\frac{\partial L}{\partial \dot{q}}\,\delta\dot{q}\,\text{d}t = -\int_{t_1}^{t_2}\left[\frac{\text{d}}{\text{d}t}\left(\frac{\partial L}{\partial \dot{q}}\right)\,\delta q\right]\text{d}t
+    \end{align}
+    We can now plug this back into the equation for the variation of the Action and obtain:
+\begin{align}
+    \delta S &= \int_{t_1}^{t_2} \left[\frac{\partial L}{\partial q}\delta q -\frac{\text{d}}{\text{d}t}\left(\frac{\partial L}{\partial \dot{q}}\right)\,\delta q \right] \text{d}t=0 
+\end{align}
+    Now we can pull the $\delta q$ outside of the expression: 
+    \begin{align}
+    \delta S &= \int_{t_1}^{t_2} \,\delta q \left[\frac{\partial L}{\partial q} -\frac{\text{d}}{\text{d}t}\left(\frac{\partial L}{\partial \dot{q}}\right)\right] \text{d}t=0 
+    \end{align}
+    As we can choose $\delta q$ arbitrarily, the equation is only true in general if the bracket term inside the integral is zero, i.e.: 
+    \begin{align}
+        \frac{\partial L}{\partial q}-\frac{\text{d}}{\text{d}t}\left(\frac{\partial L}{\partial \dot{q}}\right) = 0
+    \end{align} 
+    This equation is true for all the generalized coordinates in the system. So in the most general form, we get ($i=1,2, \dots ,n$):
+    \begin{align}
+        \frac{\partial L}{\partial q_i}-\frac{\text{d}}{\text{d}t}\left(\frac{\partial L}{\partial \dot{q_i}}\right) = 0
+    \end{align}
+    These equations are called the Lagrange Equations or Euler-Lagrange Equations.
+    We will soon see that if you know the Lagrangian of a system, then those equations connect the accelerations, velocities, and coordinates, i.e., they are the equations of motion for the system in question.
+    

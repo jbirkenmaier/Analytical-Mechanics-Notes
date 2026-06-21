@@ -1,0 +1,13 @@
+\section{The Action and the Lagrangian}
+Imagine a particle moving from point $A$ at time $t_1$ to point $B$ at time $t_2$. Out of all the infinitely many paths $\vec{q}(t)$ the particle \textit{could} physically take, how does nature choose the \textit{actual} path the particle follows?
+It turns out that in nature there is a certain number associated with each possible path. For a first start, imagine it like a cost for going from one place to another. In analytical mechanics, we propose that Nature chooses the path with the lowest cost of all the possible paths.
+The \textbf{Principle of Least Action} states that the actual path the particle takes in the real world is the specific function $\vec{q}(t)$ that minimizes the Action. Finding that special path is the entire goal of Lagrangian mechanics!
+\subsubsection*{Action}
+We can conclude that the Action has to be a functional, that takes a trajectory and returns the total cost of taking this trajectory to us.
+So our strategy to find this cost would be to calculate the cost for every instant in time and add it all up. So this means we have an integration over time of some function that gives us the path's cost rate at every moment. We call this function $L$ for Lagrangian. For the total cost (that is the cost added up over the whole time) that we call Action, we choose the letter $S$. So putting this all together we reasoned our way to a very general expression of our Action: 
+\begin{align} \label{eq:action}
+        S[q(t), \dot{q}(t)]=\int_{t_1}^{t_2} L(q(t), \dot{q}(t), t)\,\text{d}t
+\end{align}
+Please note that in this notation and from now on we leave out the vector arrows but we assume that $q(t)$ and $\dot{q}(t)$ can generally be vectors.
+
+\textbf{Quick Question:} Why is $L$ a function and not a functional? \textbf{Answer:} As you can see from the round brackets, we defined $L$ as a function. We just plug in a certain position and velocity into $L$ and it gives us a number back. On the contrary, for $S$ the trajectory as a whole gets evaluated (as we are integrating over every instant in time).

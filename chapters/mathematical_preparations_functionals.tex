@@ -1,0 +1,33 @@
+\section{Functionals: Functions of Functions}
+Now that we have brushed up on how to handle multivariable functions, we need to introduce a completely new mathematical object: the \textbf{Functional}. 
+
+If you are seeing this for the first time, take a deep breath. It sounds abstract, but the core idea is actually quite intuitive. 
+
+\subsection*{The Core Concept and Notation}
+Let us contrast a functional with something you already know intimately: a standard function. 
+A regular function, like $f(x) = x^2$, takes a \textit{number} as an input, and spits out a \textit{number} as an output. You plug in $x=2$, and you get out $4$. Notice the parentheses $()$; they tell us the input is a standard variable.
+
+A \textbf{functional}, on the other hand, takes an \textit{entire function} as an input, and spits out a \textit{number} as an output. 
+To distinguish it from regular functions, we use square brackets $[]$. We write a functional as $F[y(x)]$. 
+
+When you evaluate $F[y(x)]$, you do not plug in a single number like $x=5$. Instead, you plug in a whole shape, or a path, like the entire curve $y(x) = \sin(x)$. The functional looks at that entire shape and assigns a single numeric value to it. 
+
+\subsection*{A Simple Example: The Arc Length}
+The best way to understand this is with an example you actually already know from basic calculus: measuring the length of a curve.
+
+Imagine two points on a piece of paper, Point $A$ and Point $B$. There are infinitely many lines (functions) you could draw to connect $A$ to $B$. 
+Let us imagine two specific paths:
+\begin{itemize}
+    \item $y_1(x)$: A perfectly straight line connecting $A$ and $B$.
+    \item $y_2(x)$: A wild, winding, zig-zagging line connecting $A$ and $B$.
+\end{itemize}
+
+We can define a functional, let's call it $L[y(x)]$, which calculates the length of whatever path you feed into it. 
+If we feed it our straight line, it spits out a small number, because the path is short. Let's say $L[y_1] = 5$.
+If we feed it our wild zig-zag line, it spits out a much larger number. Let's say $L[y_2] = 45$.
+
+The mathematical "machine" that actually calculates this length is an integral. Almost all functionals in physics are built out of integrals. The arc length functional looks like this:
+\begin{align}
+    L[y(x)] = \int_{x_A}^{x_B} \sqrt{1 + \left( \frac{\text{d}y}{\text{d}x} \right)^2} \text{d}x
+\end{align}
+Notice what happens here: when you plug a specific function (like $y_1(x)$) into this integral and evaluate it from $x_A$ to $x_B$, all the $x$'s are integrated away. You are left with just a single number: the total length of the curve.
