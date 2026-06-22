@@ -1,6 +1,8 @@
 \section{Taylor expansion}
 So let's first start with a refresher of the Taylor expansion in one dimension.
-As you might recall, a Taylor expansion is a way to represent a function as a polynomial. We use this because dealing with polynomials is oftentimes easier than working with the original function. 
+As you might recall, a Taylor expansion is a way to represent a function as a polynomial. We use this because dealing with polynomials is oftentimes easier than working with the original function.
+
+\subsection{1D-Taylor expansion} 
 Generally when we use Taylor-expansion we are not interested in the whole function we are expanding, but only in a small area around a a point $x_0$. The distance between this point and any other close point to it we denote by $\delta x$. We can then express $x$ as follows:
 \begin{align}
 		x = x_0 + \delta x
@@ -26,6 +28,7 @@ Where I used the following conventions:
 \begin{align}
     f^{(n)}(x_0) = \left[\frac{\text{d}^n}{\text{d}x^n} f(x)\right]\bigg{|}_{x_0}
 \end{align}
+So $f^{(n)}(x_0)$ means that we derive first and then plug in $x_0$ into that derivative.
 Alternatively we can write the Taylor expansion in terms of $\delta x$, using equation (\ref{eq:increment})
 \begin{align}\label{eq:taylor1d_increment}
     f(x)=f(x_0+\delta x)= \sum_{n=0}^\infty \frac{f^{(n)}(x_0)}{n!}\delta x^n
@@ -65,7 +68,32 @@ Let's just do a short example to see how this works and how we can use it to sim
 	So we went from a function that we could not really work with to a much simpler representation. This is the power of Taylor expansion and the whole point why we use it. 
 	Now let's go to more than one dimension.
 \end{examplebox}
-\subsubsection{Multivariate Taylor Expansion}
+\subsection{A more general definition of Taylor expansion}
+There is a more general way to express the Taylor expansion. This is useful if you do not want to memorize equation (\ref{eq:taylor1d}) (altough I recommend that for 1D) and more importantely it will simplify the multivariate Taylor expansion which will be covered later. We found that 
+
+\begin{align*}
+	f(x)&=f(x_0+\delta x)= \sum_{n=0}^\infty \frac{f^{(n)}(x_0)}{n!}\delta x^n\\
+		&= \frac{1}{0!}f^{(0)}(x_0)\delta x^0 + \frac{1}{1!} f^{(1)}(x_0)\delta x^1 +  \frac{1}{2!}f^{(2)}(x_0)\delta x^2 + \frac{1}{3!} f^{(3)}(x_0)\delta x^3 + ...\\
+	&= \frac{1}{0!}\delta x^0 \dv[0]{f(x_0)}{x} + \frac{1}{1!} \delta x^1\dv[1]{f(x_0)}{x} +  \frac{1}{2!}\delta x^2\dv[2]{f(x_0)}{x} + \frac{1}{3!} \delta x^3\dv[3]{f(x_0)}{x} + ...\\
+\end{align*}
+In the last step, I just pulled $\delta x^n$ to the front, the reason for this will become clear in a second. If we take a look at this result it looks oddly similiar to the shape of the series expansion of $e^u$:
+\begin{align}
+	e^u = 1+u+\frac{u^2}{2}+\frac{u^3}{6}+... = \sum_{n=0}^{\infty} \frac{u^n}{n!}
+\end{align}
+Actually, if we make the identification
+\begin{align*}
+	u = \delta x \dv{}{x}
+\end{align*}
+
+We can express the Taylor polynomial as 
+
+\begin{align}
+f(x)&= \sum_{n=0}^\infty \frac{f^{(n)}(x_0)}{n!}\delta x^n = e^{\delta x \dv{}{x}}f(x_0)\\
+\end{align}
+
+Which looks a lot more handy. For one dimension this definition might not be life-changing and I would recommend using the definition we discussed earlier for Problems in 1D, as you save time because you do not have to expand out the exponential function first. However this definition will become extremely useful when we look at the case of multivariate Taylor expansion. 
+
+\subsection{Multivariate Taylor Expansion}
 If we want to find a simpler representation for a multivariate function, we must consider the multivariate Taylor Expansion. 
 The multivariate Taylor expansion for a function $f(\vec{x})=f(x_1,x_2, \dots, x_n)$ is defined as:
 \begin{align}
