@@ -12,7 +12,7 @@ From which follows that
 		\delta x = x - x_0
 \end{align}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 	\centering
 	% Hier lädst du das fertige PDF, das aus TikZ entstanden ist
 	\includegraphics[width=0.8\textwidth]{images/tikz/taylor.pdf}
@@ -92,205 +92,50 @@ f(x)&= \sum_{n=0}^\infty \frac{f^{(n)}(x_0)}{n!}\delta x^n = e^{\delta x \dv{}{x
 \end{align}
 
 Which looks a lot more handy. For one dimension this definition might not be life-changing and I would recommend using the definition we discussed earlier for Problems in 1D, as you save time because you do not have to expand out the exponential function first. However this definition will become extremely useful when we look at the case of multivariate Taylor expansion. 
+\subsection{Einstein-Sum-Convention}
+Now before we go any further we have to talk about some notation. The Einstein-Sum-Convention is a handy way to write otherwise lengthy expressions including sums. Its simple rule says that if an index appears exactly twice in a term, we sum over them over the whole range of dimensions we are working in. For example, using the ESC we could write the scalar product of $n$-dimensional vectors $\vec{a}$ and $\vec{b}$ as 
+\begin{align}
+	\vec{a}\cdot\vec{b} = a_1b_1+a_2b_2+\dots+a_nb_n \equiv a_ib_i \,.
+\end{align}
 
 \subsection{Multivariate Taylor Expansion}
-If we want to find a simpler representation for a multivariate function, we must consider the multivariate Taylor Expansion. 
-The multivariate Taylor expansion for a function $f(\vec{x})=f(x_1,x_2, \dots, x_n)$ is defined as:
+If we want to find a simpler representation for a multivariate function, we must consider the multivariate Taylor expansion. 
+Consider a function $f(\vec{x})=f(x_1,x_2, \dots, x_n)$ that depends on a vector $\vec{x}=(x_1,x_2,...,x_n)$. Now our point of development becomes a vector too
 \begin{align}
-    T(\vec{x};\vec{a}) = \sum^\infty_{|\vec{\alpha}|=0}\frac{D^{\Vec{\alpha}}f(\vec{x}_0)}{\vec{\alpha}!}\left(\vec{x}-\vec{x_0}\right)^{\vec{\alpha}}
+	\vec{x}_0 = (x_{01}, x_{02},...,x_{0n})\,,
 \end{align}
-Now this looks very confusing and intimidating if you see it for the first time, but we will dissect it and make sure we understand every part of it, and then do a small example together. Probably the most confusing thing about this definition is the notation. 
+and the small derivation from $\vec{x}_0$ becomes
+\begin{align}
+	\delta \vec{x} = \vec{x} + \vec{x}_0\,,
+\end{align}
+and again we can express $\vec{x}$ in terms of $\vec{x}_0$ and $\delta \vec{x}$
+\begin{align}
+	\vec{x} = \delta \vec{x} - \vec{x}_0 \,.
+\end{align}
+In multiple dimensions the derivative becomes a $\nabla$ operator
+\begin{align}
+	\nabla = \left(\pdv{x_1}, \pdv{x_2},...,\pdv{x_n}\right) \equiv \left(\partial_1, \partial_2, ..., \partial_n\right)
+\end{align}
+Where we simplified our notation in the last step a little bit. 
+Now we have all the components to write down our definition of the multivariate Taylor expansion. The multivariate Taylor expansion is defined as 
+\begin{align}
+f(\vec{x})&=e^{\delta \vec{x}\cdot \nabla}f(\vec{x}_0)
+\end{align}
+we can rewrite this expression, using Einstein-Sum-Convention to its final form
+\begin{align}
+	f(\vec{x})&=e^{\delta x_i\partial_i}f(\vec{x}_0) \,.
+\end{align}
+We can evaluate this and obtain
+\begin{align}\label{eq:taylor_multivar_evaluated}
+	f(\vec{x}) &= f(\vec{x}_0) + \delta x_i \partial_i f(\vec{x}_0) + \frac{1}{2!} \delta x_i \delta x_j \partial_i \partial_j f(\vec{x}_0) + \mathcal{O}(\delta x^3) \,.
+\end{align}
+Where $\mathcal{O}(\delta x^3)$ signifies a small rest that depends on $\delta x^3$. We will use this notation from now on insted of three dots. Note that in equation (\ref{eq:taylor_multivar_evaluated}) we used the Einstein-Sum-Convention. We will see how this works in practice in an example soon. I have to note that this way of working with the multivariate Taylor expansion is only one way and that there is a much lenghtier way to do it but that might also be valuable to explore. You can find an alternative but equivalent definition of the multivariate Taylor function together with a practice example in Appendix \ref{apx:multivariate_taylor}.
 
-\subsubsection*{The Multi-index $\vec{\alpha}$}
 
-The heart of this notation is the vector $\vec{\alpha}$, which is called a Multi-index. 
-It acts really just as an index for our sum and is a vector of non-negative whole numbers:
-\begin{align}
-    \vec{\alpha} = (\alpha_1, \alpha_2, \dots,\alpha_n)
-\end{align}
-for example:
-\begin{align}
-    \vec{\alpha} = (2,0,1)
-\end{align}
-These numbers tell us how often something is supposed to happen with our function. This will become more clear when we look at the example later on. 
 
-\subsubsection*{The dimension of $\vec{\alpha}$}
-The dimension $n$ of $\vec{\alpha}$ is the dimension of the variable $\vec{x}$ of the function we are developing.
-\begin{align}
-    \dim(\vec{\alpha}) = \dim(\vec{x})
-\end{align}
-So if $\vec{x}$ has three components, our vector $\vec{\alpha}$ also has three components!
-Now we need to discuss a very important property of $\vec{\alpha}$ to understand our notation. 
 
-\subsubsection*{The absolute value of $\vec{\alpha}$}
-The definition of the absolute value of $\vec{\alpha}$ is not the standard definition for the length of a vector. Instead, it is defined as:
-\begin{align}
-    |\vec{\alpha}| = \sum_{i=1}^n \alpha_i = \alpha_1+\alpha_2+\dots+\alpha_n
-\end{align}
-For example:
-\begin{align}
-    |\vec{\alpha}|=|(2,0,1)| = 2+0+1 = 3
-\end{align}
 
-\subsubsection*{The Factorial of $\vec{\alpha}$}
-The factorial of our Multi-index $\vec{\alpha}$ is defined as:
-\begin{align}
-    \vec{\alpha}! = \alpha_1!\cdot\alpha_2!\,\cdot\dots\cdot\,\alpha_n! = \prod_{i=1}^n \alpha_i!
-\end{align}
 
-\subsubsection*{The Derivative $D^{\vec{\alpha}}$}
-This derivative term might seem like the most difficult of our definitions, but is actually very easy to understand. It is defined as:
-\begin{align}
-    D^{\vec{\alpha}}=\frac{\partial^{|\vec{\alpha}|}}{\partial x_1^{\alpha_1}\cdot \partial x_2^{\alpha_2}\cdot\partial x_3^{\alpha_3}\cdot\dots\cdot\partial x_n^{\alpha_n}}
-\end{align}
-For our example, this would be:
-\begin{align}
-    D^{(2,0,1)}=\frac{\partial^3}{\partial x_1^2 \cdot \partial x_2^0 \cdot \partial x_3^1}
-\end{align}
-Okay, now that we have got all these definitions, we want to think a little bit about what is happening in our Multivariate Taylor Expansion.
-Essentially, if we look back at our formula, this is what it tells us:
-We go through all possible combinations of our Multi-index $\alpha$ that have a certain absolute value, associated with the current summation term. 
-Note that $D^{\vec{\alpha}}f(\vec{x}_0)$ just like in one dimension denotes that we \textit{first} apply the derivative and \textit{then} plug in our point of development $x_0$.
-
-\subsubsection*{1st Step: $|\vec{\alpha}|=0$}
-For example, let's say our $|\vec{\alpha}|=0$. That means we only have one combination of indices that can make that happen, and that is:
-\begin{align}
-    \vec{\alpha}=(0,0,0)
-\end{align}
-So now all we have to do is to use our definitions from above and plug in all these values to obtain the first term of our expansion. 
-
-\subsubsection*{2nd Step: $|\vec{\alpha}|=1$}
-Now if $|\vec{\alpha}|=1$, the situation becomes a bit more complex, because we have three possible arrangements of $\vec{\alpha}$ that produce this absolute value:
-\begin{align}
-    \vec{\alpha} &= (1,0,0) \\
-    \vec{\alpha} &= (0,1,0) \\
-    \vec{\alpha} &= (0,0,1)
-\end{align}
-To get our next terms of summation, we have to plug in all these three combinations into our definitions and add the result.
-
-\subsubsection*{3rd Step: $|\vec{\alpha}|=2$}
-By continuing this process, you can then find for our next step $|\vec{\alpha}|=2$: 
-\begin{align}
-    \vec{\alpha} &= (1,1,0) \\
-    \vec{\alpha} &= (0,1,1) \\
-    \vec{\alpha} &= (1,0,1) \\
-    \vec{\alpha} &= (2,0,0) \\
-    \vec{\alpha} &= (0,2,0) \\
-    \vec{\alpha} &= (0,0,2)
-\end{align}
-Again, we have to plug in all of these into our definitions to obtain all the terms that we need in this step. 
-This process continues then into infinity.
-
-\subsubsection*{The Bracket raised to the power of a Vector}
-There is one last aspect of multivariate Taylor expansion that we should talk about. The meaning of:
-\begin{align}\label{eq:differencetaylor}
-    (\vec{x}-\vec{x}_0)^{\vec{\alpha}}
-\end{align}
-To explain this, I have to explicitly write out $\vec{x}_0$:
-\begin{align}
-    \vec{x}_0=(x_{01}, x_{02})
-\end{align}
-Expression (\ref{eq:differencetaylor}) seems extremely confusing at first because what does it mean to raise a vector by another vector? Well, in our convention, there is a clear definition of this, and it's really simple:
-\begin{align}
-    (\vec{x}-\vec{x}_0)^{\vec{\alpha}} = \left((x_1-x_{01}), (x_2-x_{02})\right)^{(\alpha_1, \alpha_2)} = (x_1-x_{01})^{\alpha_1}\cdot(x_2-x_{02})^{\alpha_2}
-\end{align}
-We are multiplying all our components, raised to the power of the corresponding component of $\vec{\alpha}$.
-
-\subsubsection*{Example of Multivariate Taylor Expansion}
-After this long theoretical preparation, let's do a simple example to illustrate the process in practice.
-Let's take a look at the function:
-\begin{align}
-f(x_1,x_2) = e^{x_1} \cos(x_2)    
-\end{align}
-Now we want to find a simpler expression for this. For this purpose, we can use our trusted tool, the Taylor Expansion, to find a simpler polynomial representation for this function. As you can see, the function depends on two variables, $x_1$ and $x_2$. Therefore, we have to use the Multivariate Taylor Expansion in this case.
-
-\subsubsection*{Preparations}
-Before we start with the expansion, we have to do some preparations. We have to choose a point of development $\vec{x}_0$. Normally, as physicists, we want to choose this point exactly at the position we are interested in, because only then later can we argue that we can throw away terms and still have an accurate description of the problem. In practice, you can often choose your coordinate system so that $\vec{x}_0$ becomes $\vec{0}$, which then simplifies the calculations. So we are going to choose $\vec{x}_0=\vec{0}$ in this example for convenience.
-\begin{align}
-    \vec{x}_0= \vec{0}
-\end{align}
-Our $\vec{x}$ is of course:
-\begin{align}
-    \vec{x}=(x_1, x_2)
-\end{align}
-
-\subsubsection*{1st Step ($|\vec{\alpha}|=0$)}
-
-\begin{table}[h!]
-    \centering
-    \renewcommand{\arraystretch}{1.5} 
-    \begin{tabular}{cccc}
-        \hline
-        $|\vec{\alpha}|=0$ & $D^{\vec{\alpha}}$ & $\left(\vec{x}-\vec{x_0}\right)^{\vec{\alpha}}$& $\vec{\alpha}!$\\
-        \hline
-        $(\alpha_1, \alpha_2)=(0, 0)$&$\frac{\partial^0}{\partial x_1^{0}\cdot \partial x_2^{0}}$& $(x_1-0)^0\cdot(x_2-0)^0$& $0!\cdot0!= 1$
-    \end{tabular}
-    \label{tab:taylor_example_1}
-\end{table}
-Now that we have found these important components, we can proceed and plug in our actual values: 
-\begin{align}
-        T_{(0,0)}&=\frac{1}{1}\left[\frac{\partial^0}{\partial x_1^{0}\cdot \partial x_2^{0}} f(x_1, x_2)\right]\bigg{|}_{(0,0)}(x_1-0)^0\cdot(x_2-0)^0\\
-        &=f(0,0)= e^{0} \cos(0) = 1
-\end{align}
-This already was our first step! Now let's go to the second step...
-
-\subsubsection*{2nd Step ($|\vec{\alpha}|=1$)}
-
-\begin{table}[h!]
-    \centering
-    \renewcommand{\arraystretch}{1.5} 
-    \begin{tabular}{cccc}
-        \hline
-        $|\vec{\alpha}|=1$ & $D^{\vec{\alpha}}$ & $\left(\vec{x}-\vec{x_0}\right)^{\vec{\alpha}}$& $\vec{\alpha}!$\\
-        \hline
-        $(\alpha_1, \alpha_2)=(1, 0)$&$\frac{\partial^1}{\partial x_1^{1}\cdot \partial x_2^{0}}$& $(x_1-0)^1\cdot(x_2-0)^0$ & $1!\cdot 0! = 1$\\
-        $(\alpha_1, \alpha_2)=(0, 1)$&$\frac{\partial^1}{\partial x_1^{0}\cdot \partial x_2^{1}}$& $(x_1-0)^0\cdot(x_2-0)^1$ &$0!\cdot 1! = 1$
-    \end{tabular}
-    \label{tab:taylor_example_2}
-\end{table}
-Now we again have the important components, and we can proceed to plug in our actual values: 
-\begin{align}
-        T_{(1,0)}&=\frac{1}{1}\left[\frac{\partial^1}{\partial x_1^{1}\cdot \partial x_2^{0}}f(x_1, x_2)\right]\bigg{|}_{(0,0)}(x_1-0)^1\cdot(x_2-0)^0\\
-        &=\eval{\frac{\partial}{\partial x_1}f(x_1,x_2)}_{(0,0)}x_1= \eval{\left[e^{x_1} \cos(x_2)\right]}_{(0,0)}x_1= x_1
-\end{align}
-Now we have to repeat this step for $T_{(0,1)}$:
-\begin{align}
-        T_{(0,1)}&=\frac{1}{1}\left[\frac{\partial^1}{\partial x_1^{0}\cdot \partial x_2^{1}}f(x_1, x_2)\right]\eval_{(0,0)}(x_1-0)^0\cdot(x_2-0)^1\\
-        &=\eval{\frac{\partial}{\partial x_2}f(x_1,x_2)}_{(0,0)}x_2= \eval{\left[-e^{x_1} \sin(x_2)\right]}_{(0,0)}= 0
-\end{align}
-
-\subsubsection*{3rd Step ($|\vec{\alpha}|=2$)}
-Now let's do a third and final step to finalize this example.
-\begin{table}[h!]
-    \centering
-    \renewcommand{\arraystretch}{1.5} 
-    \begin{tabular}{cccc}
-        \hline
-        $|\vec{\alpha}|=2$ & $D^{\vec{\alpha}}$ & $\left(\vec{x}-\vec{x_0}\right)^{\vec{\alpha}}$& $\vec{\alpha}!$\\
-        \hline
-        $(\alpha_1, \alpha_2)=(1, 1)$&$\frac{\partial^2}{\partial x_1^{1}\cdot \partial x_2^{1}}$& $(x_1-0)^1\cdot(x_2-0)^1$ &$1!\cdot 1! = 1$\\
-        $(\alpha_1, \alpha_2)=(2, 0)$&$\frac{\partial^2}{\partial x_1^{2}\cdot \partial x_2^{0}}$& $(x_1-0)^2\cdot(x_2-0)^0$ &$2!\cdot 0! = 2$\\
-        $(\alpha_1, \alpha_2)=(0, 2)$&$\frac{\partial^2}{\partial x_1^{0}\cdot \partial x_2^{2}}$& $(x_1-0)^0\cdot(x_2-0)^2$ &$0!\cdot 2! = 2$
-    \end{tabular}
-    \label{tab:taylor_example_3}
-\end{table}
-\begin{align}
-        T_{(1,1)}&=\frac{1}{1}\left[\frac{\partial^2}{\partial x_1^{1}\cdot \partial x_2^{1}}f(x_1, x_2)\right]\eval_{(0,0)}(x_1-0)^1\cdot(x_2-0)^1\\
-        &=\eval{\frac{\partial}{\partial x_1}\frac{\partial}{\partial x_2}f(x_1,x_2)}_{(0,0)}x_1\, \cdot x_2=  \eval{\left[-e^{x_1}\sin(x_2)\right]}_{(0,0)}= 0
-\end{align}
-\begin{align}
-T_{(2,0)}&=\frac{1}{2}\left[\frac{\partial^2}{\partial x_1^{2}\cdot \partial x_2^{0}}f(x_1, x_2)\right]\eval_{(0,0)}(x_1-0)^2\cdot(x_2-0)^0\\
-&=\frac{1}{2}\eval{\frac{\partial^2}{\partial x_1^2}f(x_1,x_2)}_{(0,0)}x_1^2 =  \frac{1}{2}\eval{\left[e^{x_1}\cos(x_2)\right]}_{(0,0)}x_1^2=\frac{1}{2}x_1^2
-\end{align}
-\begin{align}
-T_{(0,2)}&=\frac{1}{2}\left[\frac{\partial^2}{\partial x_1^{0}\cdot \partial x_2^{2}}f(x_1, x_2)\right]\eval_{(0,0)}(x_1-0)^0\cdot(x_2-0)^2\\
-&=\frac{1}{2}\eval{\frac{\partial^2}{\partial x_2^2}f(x_1,x_2)}_{(0,0)}x_2^2 = \frac{1}{2} \eval{\left[-e^{x_1}\cos(x_2)\right]}_{(0,0)}x_2^2=-\frac{1}{2}x_2^2
-\end{align}
-\subsection*{Putting it all together}
-Okay, now that we have found all of those terms, let's put them together:
-\begin{align}
-    f(x_1, x_2)=e^{x_1} \cos(x_2)  \approx 1+ x_1+ \frac{x_1^2}{2}-\frac{x_2^2}{2} 
-\end{align}
 
 \subsection{A Practical Method for Taylor-Expansion}
 
