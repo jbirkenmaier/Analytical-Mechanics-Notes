@@ -102,16 +102,17 @@ Now before we go any further we have to talk about some notation. The Einstein-S
 If we want to find a simpler representation for a multivariate function, we must consider the multivariate Taylor expansion. 
 Consider a function $f(\vec{x})=f(x_1,x_2, \dots, x_n)$ that depends on a vector $\vec{x}=(x_1,x_2,...,x_n)$. Now our point of development becomes a vector too
 \begin{align}
-	\vec{x}_0 = (x_{01}, x_{02},...,x_{0n})\,,
+	\vec{x}_0 = (x_{01}, x_{02},...,x_{0n})\,.
 \end{align}
-and the small derivation from $\vec{x}_0$ becomes
+We can now express $\vec{x}$ in terms of $\vec{x}_0$ and $\delta \vec{x}$
 \begin{align}
-	\delta \vec{x} = \vec{x} + \vec{x}_0\,,
+	\vec{x} = \vec{x}_0 + \delta\vec{x}
 \end{align}
-and again we can express $\vec{x}$ in terms of $\vec{x}_0$ and $\delta \vec{x}$
+and
 \begin{align}
-	\vec{x} = \delta \vec{x} - \vec{x}_0 \,.
+	\delta \vec{x} = \vec{x} - \vec{x}_0\,,
 \end{align}
+
 In multiple dimensions the derivative becomes a $\nabla$ operator
 \begin{align}
 	\nabla = \left(\pdv{x_1}, \pdv{x_2},...,\pdv{x_n}\right) \equiv \left(\partial_1, \partial_2, ..., \partial_n\right)
