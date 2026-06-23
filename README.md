@@ -22,3 +22,5 @@ The structure and philosophy of these notes are heavily inspired by classic lite
 ### ✍️ Authors & Contributors
 * **Initiated and maintained by:** Johannes Birkenmaier
 * **Contributors:** will be credited here!
+
+* Buy me a coffee ☕: https://buymeacoffee.com/johannesbis
